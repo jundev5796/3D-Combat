@@ -182,7 +182,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   camAxis_Central: {fileID: 411418544}
   cam: {fileID: 963194228}
-  camSpeed: 2
+  camSpeed: 8
+  playerAxis: {fileID: 1353566306}
+  player: {fileID: 648389060}
+  playerSpeed: 5
+  movement: {x: 0, y: 0, z: 0}
 --- !u!4 &478530534
 Transform:
   m_ObjectHideFlags: 0

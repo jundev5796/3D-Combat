@@ -10,6 +10,12 @@ public class Controller : MonoBehaviour
     float mouseY; // mouse y-coord movement
     float wheel; // mouse wheel
 
+    [Header("Player")]
+    public Transform playerAxis;
+    public Transform player;
+    public float playerSpeed;
+    public Vector3 movement;
+
 
     void Start()
     {
@@ -22,6 +28,7 @@ public class Controller : MonoBehaviour
     {
         CamMove(); // 카메라 회전
         Zoom(); // 카메라 위치 조정
+        PlayerMove(); // player movement
     }
 
 
@@ -52,5 +59,24 @@ public class Controller : MonoBehaviour
             wheel = -20;
 
         cam.localPosition = new Vector3(0, 0, wheel); // 카메라 위치
+    }
+
+
+    void PlayerMove()
+    {
+        movement = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical")); // player movement direction
+
+        if (movement != Vector3.zero)
+        {
+            playerAxis.rotation = Quaternion.Euler(new Vector3(0, camAxis_Central.rotation.y + mouseX, 0) * camSpeed);
+            playerAxis.Translate(movement * playerSpeed * Time.deltaTime); // player movement
+
+            player.localRotation = Quaternion.Slerp(player.localRotation, Quaternion.LookRotation(movement), 5 * Time.deltaTime); // player rotation
+
+            // animation
+
+        }
+
+        camAxis_Central.position = new Vector3(player.position.x, player.position.y + 3, player.position.z); // camera position
     }
 }
